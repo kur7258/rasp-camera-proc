@@ -2,7 +2,7 @@ import cv2
 from flask import Flask, Response
 
 # Pi Camera 모듈용 라이브러리
-from picamera2 import Picamera2
+# from picamera2 import Picamera2
 import numpy as np
 
 app = Flask(__name__)
