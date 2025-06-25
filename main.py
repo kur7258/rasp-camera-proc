@@ -43,8 +43,8 @@ def gen_frames_picamera():
     finally:
         picam2.close()
 
-# gen_frames = gen_frames_usb  # USB 웹캠용
-gen_frames = gen_frames_picamera  # Pi Camera 모듈용
+gen_frames = gen_frames_usb  # USB 웹캠용
+# gen_frames = gen_frames_picamera  # Pi Camera 모듈용
 
 @app.route('/video_feed')
 def video_feed():
