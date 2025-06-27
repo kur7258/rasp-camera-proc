@@ -7,7 +7,7 @@ import numpy as np
 
 app = Flask(__name__)
 
-fire_img = cv2.imread('fire.png', cv2.IMREAD_UNCHANGED)  # (H, W, 4)
+fire_img = cv2.imread('fire_sample.png', cv2.IMREAD_UNCHANGED)  # (H, W, 4)
 
 def overlay_fire(frame, fire_img, x, y):
     fh, fw = fire_img.shape[:2]
