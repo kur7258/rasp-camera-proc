@@ -30,7 +30,7 @@ def gen_frames_usb():
         if not success:
             break
         # 불 이미지 합성
-        frame = overlay_fire(frame, fire_img, x=80, y=130)
+        frame = overlay_fire(frame, fire_img, x=197, y=221)
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
         # MJPEG 스트림 형식으로 반환
