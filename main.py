@@ -69,10 +69,50 @@ def index():
     <html>
     <head>
         <title>Raspberry Pi Camera Stream</title>
+        <style>
+            #cam-container {
+                position: relative;
+                display: inline-block;
+            }
+            #coords {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                background: rgba(0,0,0,0.5);
+                color: #fff;
+                padding: 2px 8px;
+                border-radius: 4px;
+                font-size: 16px;
+                pointer-events: none;
+                z-index: 10;
+            }
+        </style>
     </head>
     <body>
         <h1>실시간 카메라 스트림</h1>
-        <img src="/video_feed" width="640" height="480">
+        <div id="cam-container">
+            <img id="cam" src="/video_feed" width="640" height="480" style="display:block;">
+            <div id="coords">x: -, y: -</div>
+        </div>
+        <script>
+            const cam = document.getElementById('cam');
+            const coords = document.getElementById('coords');
+            cam.addEventListener('mousemove', function(e) {
+                const rect = cam.getBoundingClientRect();
+                const x = Math.round(e.clientX - rect.left);
+                const y = Math.round(e.clientY - rect.top);
+                coords.textContent = `x: ${x}, y: ${y}`;
+                coords.style.display = 'block';
+                coords.style.left = (x + 10) + 'px';
+                coords.style.top = (y + 10) + 'px';
+            });
+            cam.addEventListener('mouseleave', function() {
+                coords.textContent = 'x: -, y: -';
+                coords.style.display = 'block';
+                coords.style.left = '10px';
+                coords.style.top = '10px';
+            });
+        </script>
     </body>
     </html>
     '''
