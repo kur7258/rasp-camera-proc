@@ -79,4 +79,4 @@ def index():
 
 if __name__ == '__main__':
     # 0.0.0.0으로 바인딩해야 외부에서 접속 가능
-    app.run(host='0.0.0.0', port=5001, threaded=True)
+    app.run(host='0.0.0.0', port=5000, threaded=True)
