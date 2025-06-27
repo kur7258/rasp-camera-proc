@@ -7,6 +7,17 @@ import numpy as np
 
 app = Flask(__name__)
 
+fire_img = cv2.imread('fire.png', cv2.IMREAD_UNCHANGED)  # (H, W, 4)
+
+def overlay_fire(frame, fire_img, x, y):
+    fh, fw = fire_img.shape[:2]
+    roi = frame[y:y+fh, x:x+fw]
+    fire_rgb = fire_img[..., :3]
+    alpha = fire_img[..., 3:] / 255.0
+    blended = (roi * (1 - alpha) + fire_rgb * alpha).astype(np.uint8)
+    frame[y:y+fh, x:x+fw] = blended
+    return frame
+
 def gen_frames_usb():
     """
     USB 웹캠(예: /dev/video0)에서 프레임을 읽어오는 제너레이터
@@ -18,7 +29,8 @@ def gen_frames_usb():
         success, frame = cap.read()
         if not success:
             break
-        # JPEG로 인코딩
+        # 불 이미지 합성
+        frame = overlay_fire(frame, fire_img, x=50, y=50)
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
         # MJPEG 스트림 형식으로 반환
@@ -67,4 +79,4 @@ def index():
 
 if __name__ == '__main__':
     # 0.0.0.0으로 바인딩해야 외부에서 접속 가능
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    app.run(host='0.0.0.0', port=5001, threaded=True)
