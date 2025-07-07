@@ -7,16 +7,16 @@ import numpy as np
 
 app = Flask(__name__)
 
-fire_img = cv2.imread('fire_sample.png', cv2.IMREAD_UNCHANGED)  # (H, W, 4)
+# fire_img = cv2.imread('fire_sample.png', cv2.IMREAD_UNCHANGED)  # (H, W, 4)
 
-def overlay_fire(frame, fire_img, x, y):
-    fh, fw = fire_img.shape[:2]
-    roi = frame[y:y+fh, x:x+fw]
-    fire_rgb = fire_img[..., :3]
-    alpha = fire_img[..., 3:] / 255.0
-    blended = (roi * (1 - alpha) + fire_rgb * alpha).astype(np.uint8)
-    frame[y:y+fh, x:x+fw] = blended
-    return frame
+# def overlay_fire(frame, fire_img, x, y):
+#     fh, fw = fire_img.shape[:2]
+#     roi = frame[y:y+fh, x:x+fw]
+#     fire_rgb = fire_img[..., :3]
+#     alpha = fire_img[..., 3:] / 255.0
+#     blended = (roi * (1 - alpha) + fire_rgb * alpha).astype(np.uint8)
+#     frame[y:y+fh, x:x+fw] = blended
+#     return frame
 
 def gen_frames_usb():
     """
@@ -30,7 +30,7 @@ def gen_frames_usb():
         if not success:
             break
         # 불 이미지 합성
-        frame = overlay_fire(frame, fire_img, x=193, y=215)
+        # frame = overlay_fire(frame, fire_img, x=193, y=215)
         ret, buffer = cv2.imencode('.jpg', frame)
         frame = buffer.tobytes()
         # MJPEG 스트림 형식으로 반환
